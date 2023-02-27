@@ -2,11 +2,11 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { ThemeContext } from './App';
 
-const Button = ({ children }) => {
+const Button = ({ children, className, onClick }) => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <button style={{ display: 'block' }} className={theme}>
+    <button className={`${className} ${theme}`} onClick={onClick}>
       {children}
     </button>
   );

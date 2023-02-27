@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import * as React from 'react';
+import Button from '../Button';
 
 export interface Task {
   text: string;
@@ -46,14 +47,14 @@ const Task = ({ task, onChange, onDelete }: TaskProps) => {
             });
           }}
         />
-        <button onClick={() => setIsEditing(false)}>Save</button>
+        <Button onClick={() => setIsEditing(false)}>Save</Button>
       </React.Fragment>
     );
   } else {
     taskContent = (
       <React.Fragment>
-        {task.text}
-        <button onClick={() => setIsEditing(true)}>Edit</button>
+        <span>{task.text}</span>
+        <Button onClick={() => setIsEditing(true)}>Edit</Button>
       </React.Fragment>
     );
   }
@@ -70,8 +71,7 @@ const Task = ({ task, onChange, onDelete }: TaskProps) => {
           });
         }}
       />
-      {taskContent}
-      <button onClick={() => onDelete(task.id)}>Delete</button>
+      {taskContent} <Button onClick={() => onDelete(task.id)}>Delete</Button>
     </label>
   );
 };

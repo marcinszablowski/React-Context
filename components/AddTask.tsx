@@ -2,8 +2,9 @@ import { useState, Fragment } from 'react';
 import * as React from 'react';
 import { useContext } from 'react';
 import { ThemeContext } from '../App';
+import Button from '../Button';
 
-const AddTask = ({ onAddTask }) => {
+const AddTask = ({ onAddTask, onClick }) => {
   const { theme } = useContext(ThemeContext);
   const [text, setText] = useState('');
 
@@ -14,15 +15,7 @@ const AddTask = ({ onAddTask }) => {
         placeholder="Add task"
         onChange={(e) => setText(e.target.value)}
       />
-      <button
-        className={theme}
-        onClick={() => {
-          setText('');
-          onAddTask(text);
-        }}
-      >
-        Add
-      </button>
+      <Button onClick={onClick}>Add</Button>
     </React.Fragment>
   );
 };

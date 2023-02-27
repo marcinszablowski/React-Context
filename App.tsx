@@ -27,7 +27,7 @@ export default function App() {
       task: task,
     });
   };
-  
+
   const handleDeleteTask = () => {};
 
   return (
@@ -37,7 +37,7 @@ export default function App() {
           {theme === 'dark' ? '🌛 Dark' : '🌞 Light'} mode
         </p>
 
-        <form className={theme}>
+        <form className={theme} onSubmit={(e) => e.preventDefault()}>
           <h2>Tasks</h2>
           <AddTask onAddTask={handleAddTask} />
           <TaskList
@@ -45,7 +45,7 @@ export default function App() {
             onChangeTask={handleChangeTask}
             onDeleteTask={handleDeleteTask}
           />
-          <Button>Submit</Button>
+          <Button>🚀 Submit</Button>
         </form>
 
         <Form />
