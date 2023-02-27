@@ -1,12 +1,34 @@
 import * as React from 'react';
-import { createContext, useState } from 'react';
+import { createContext, useState, useReducer } from 'react';
 import './style.css';
 import Form from './Form';
+import Button from './Button';
+import AddTask from './components/AddTask';
+import TaskList from './components/TaskList';
+import type { Task } from './components/TaskList';
 
 export const ThemeContext = createContext(null);
 
 export default function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+
+  const handleAddTask = (text: string) => {
+    dispatch({
+      type: 'added',
+      text: text,
+      id: nextId++,
+    });
+  };
+
+  const handleChangeTask = (task: Task) => {
+    dispatch({
+      type: 'changed',
+      task: task,
+    });
+  };
+  
+  const handleDeleteTask = () => {};
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -14,6 +36,18 @@ export default function App() {
         <p style={{ textAlign: 'right' }}>
           {theme === 'dark' ? '🌛 Dark' : '🌞 Light'} mode
         </p>
+
+        <form className={theme}>
+          <h2>Tasks</h2>
+          <AddTask onAddTask={handleAddTask} />
+          <TaskList
+            tasks={tasks}
+            onChangeTask={handleChangeTask}
+            onDeleteTask={handleDeleteTask}
+          />
+          <Button>Submit</Button>
+        </form>
+
         <Form />
       </div>
       <button
@@ -24,3 +58,28 @@ export default function App() {
     </ThemeContext.Provider>
   );
 }
+
+const tasksReducer = (tasks: Task[], action): Task[] => {
+  switch (action.type) {
+    case 'added':
+      return [...tasks, { done: false, id: action.id, text: action.text }];
+    case 'changed':
+      return tasks.map((task) => {
+        if (task.id === action.task.id) {
+          return action.task;
+        } else {
+          return task;
+        }
+      });
+    case 'deleted':
+
+    default:
+      throw Error('Unknown action type');
+  }
+};
+const initialTasks = [
+  { id: 0, text: 'Philosopher’s Path', done: true },
+  { id: 1, text: 'Visit the temple', done: false },
+  { id: 2, text: 'Drink matcha', done: false },
+];
+let nextId = 3;

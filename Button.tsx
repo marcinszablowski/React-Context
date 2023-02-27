@@ -5,7 +5,11 @@ import { ThemeContext } from './App';
 const Button = ({ children }) => {
   const { theme } = useContext(ThemeContext);
 
-  return <button className={theme}>{children}</button>;
+  return (
+    <button style={{ display: 'block' }} className={theme}>
+      {children}
+    </button>
+  );
 };
 
 export default Button;
