@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { ThemeContext } from './App';
 
-const Form = () => {
+const BottomSection = () => {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
@@ -16,4 +16,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default BottomSection;
