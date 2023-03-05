@@ -6,6 +6,7 @@ import Button from './Button';
 import AddTask from './components/AddTask';
 import TaskList from './components/TaskList';
 import type { Task } from './components/TaskList';
+import { TasksContext, TasksDispatchContext } from './context/TasksContext';
 
 export const ThemeContext = createContext(null);
 
@@ -32,29 +33,29 @@ export default function App() {
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
-      <div>
-        <p style={{ textAlign: 'right' }}>
-          {theme === 'dark' ? '🌛 Dark' : '🌞 Light'} mode
-        </p>
+      <TasksContext.Provider value={tasks}>
+        <TasksDispatchContext.Provider value={dispatch}>
+          <div>
+            <p style={{ textAlign: 'right' }}>
+              {theme === 'dark' ? '🌛 Dark' : '🌞 Light'} mode
+            </p>
 
-        <form className={theme} onSubmit={(e) => e.preventDefault()}>
-          <h2>Tasks</h2>
-          <AddTask onAddTask={handleAddTask} />
-          <TaskList
-            tasks={tasks}
-            onChangeTask={handleChangeTask}
-            onDeleteTask={handleDeleteTask}
-          />
-          <Button>🚀 Submit</Button>
-        </form>
+            <form className={theme} onSubmit={(e) => e.preventDefault()}>
+              <h2>Tasks</h2>
+              <AddTask />
+              <TaskList />
+              <Button>🚀 Submit</Button>
+            </form>
 
-        <BottomSection />
-      </div>
-      <button
-        onClick={() =>
-          setTheme((prevState) => (prevState === 'dark' ? 'light' : 'dark'))
-        }
-      >{`App: Change to ${theme === 'dark' ? 'light' : 'dark'}`}</button>
+            <BottomSection />
+          </div>
+          <button
+            onClick={() =>
+              setTheme((prevState) => (prevState === 'dark' ? 'light' : 'dark'))
+            }
+          >{`App: Change to ${theme === 'dark' ? 'light' : 'dark'}`}</button>
+        </TasksDispatchContext.Provider>
+      </TasksContext.Provider>
     </ThemeContext.Provider>
   );
 }
