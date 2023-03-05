@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createContext, useState, useReducer } from 'react';
 import './style.css';
-import Form from './Form';
+import BottomSection from './BottomSection';
 import Button from './Button';
 import AddTask from './components/AddTask';
 import TaskList from './components/TaskList';
@@ -48,7 +48,7 @@ export default function App() {
           <Button>🚀 Submit</Button>
         </form>
 
-        <Form />
+        <BottomSection />
       </div>
       <button
         onClick={() =>
